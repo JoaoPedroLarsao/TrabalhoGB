@@ -1,3 +1,5 @@
+import modelo.Calculo;
+
 import java.util.Scanner;
 
 public class Main {
@@ -120,6 +122,10 @@ public class Main {
 
                 case 4:
                     System.out.println("Escolha 4");
+                    System.out.println("Digite o calculo que desejas fazer (ex: 5 + 3): ");
+                    String expressao = entrada.nextLine();
+
+                    Calculo calculo = new Calculo(, expressao);
 
                     menuCriacaoProcessoEmUso = false;
                     break;

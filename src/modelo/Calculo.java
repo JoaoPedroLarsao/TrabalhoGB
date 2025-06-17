@@ -8,6 +8,11 @@ public class Calculo extends Processo {
         this.expressao = expressao;
     }
 
+    @Override
+    public String toString() {
+        return " Processo: Cálculo | PID: " + getPid() + " | Expressão: " + expressao;
+    }
+
     public void executar() {
         System.out.println("Executando a operação: " + expressao + " = " + calcular());
     }

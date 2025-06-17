@@ -1,4 +1,4 @@
-import modelo.Calculo;
+import modelo.*;
 
 import java.util.Scanner;
 
@@ -7,7 +7,22 @@ public class Main {
     private static int contadorPid = 0;
 
     public static void main(String[] args) {
-        exibirMenuPrincipal();
+        //exibirMenuPrincipal();
+
+        //Testes
+        Fila fila = new Fila();
+        Calculo p1 = new Calculo(1, "1 + 1");
+        Gravacao p2 = new Gravacao(2);
+        Leitura p3 = new Leitura(3);
+        Impressao p4 = new Impressao(4);
+        fila.adicionarProcesso(p1);
+        fila.adicionarProcesso(p2);
+        fila.adicionarProcesso(p3);
+        fila.adicionarProcesso(p4);
+        fila.exibirProcessosFila();
+        fila.excluirProcesso();
+        fila.exibirProcessosFila();
+
     }
 
     private static void exibirMenuPrincipal() {

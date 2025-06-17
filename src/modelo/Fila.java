@@ -26,20 +26,29 @@ public class Fila {
             System.out.println("Fila vazia. Não há processo a ser excluído.");
         } else {
             filaProcessos[inicio] = null;
-            for (int i = 0; i < filaProcessos.length - 1; i++) {
-                for (int j = 1; j < filaProcessos.length -1; j++) {
-                    if(filaProcessos[j] == null) {
-                        break;
-                    } else {
-                        filaProcessos[i] = filaProcessos[j];
-                    }
-                }
+            for (int i = 0; i < tamanho; i++) {
+                inicio++;
+                filaProcessos[i] = filaProcessos[inicio];
             }
+            inicio = 0;
             System.out.println("Processo excluido com sucesso.");
         }
     }
 
     public boolean filaVazia() {
         return tamanho == 0;
+    }
+
+    public void exibirProcessosFila() {
+        int i = 1;
+        for (Processo processo : filaProcessos) {
+
+            if(processo == null) {
+                break;
+            } else {
+                System.out.println(i + "-" + processo);
+                i++;
+            }
+        }
     }
 }

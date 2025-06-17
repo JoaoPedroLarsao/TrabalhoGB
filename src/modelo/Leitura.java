@@ -6,6 +6,11 @@ public class Leitura extends Processo {
         super(pid);
     }
 
+    @Override
+    public String toString() {
+        return " Processo: Leitura | PID: " + getPid();
+    }
+
     public void executar() {
 
     }

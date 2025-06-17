@@ -6,6 +6,11 @@ public class Impressao extends Processo {
         super(pid);
     }
 
+    @Override
+    public String toString() {
+        return " Processo: Impressão | PID: " + getPid();
+    }
+
     public void executar() {
 
     }

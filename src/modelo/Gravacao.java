@@ -6,6 +6,11 @@ public class Gravacao extends Processo {
         super(pid);
     }
 
+    @Override
+    public String toString() {
+        return " Processo: Gravação | PID: " + getPid();
+    }
+
     public void executar() {
 
     }

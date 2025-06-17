@@ -11,5 +11,8 @@ public abstract class Processo {
         return pid;
     }
 
+    @Override
+    public abstract String toString();
+
     public abstract void executar();
 }

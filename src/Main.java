@@ -4,8 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     private static Scanner entrada = new Scanner(System.in);
-    private int[] arrayProcessos = new int[10];
-    private int contadorProcessos = 0;
+    private static int contadorPid = 0;
 
     public static void main(String[] args) {
         exibirMenuPrincipal();
@@ -125,7 +124,7 @@ public class Main {
                     System.out.println("Digite o calculo que desejas fazer (ex: 5 + 3): ");
                     String expressao = entrada.nextLine();
 
-                    Calculo calculo = new Calculo(, expressao);
+                    Calculo calculo = new Calculo(contadorPid, expressao);
 
                     menuCriacaoProcessoEmUso = false;
                     break;
@@ -136,4 +135,8 @@ public class Main {
             }
         }
     }
+    public static void incrementoPid() {
+        contadorPid++;
+    }
 }
+

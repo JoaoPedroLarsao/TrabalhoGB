@@ -5,22 +5,27 @@ import java.util.Scanner;
 public class Main {
     private static Scanner entrada = new Scanner(System.in);
     private static int contadorPid = 0;
+    static Fila fila = new Fila();
 
     public static void main(String[] args) {
         //exibirMenuPrincipal();
 
         //Testes
-        Fila fila = new Fila();
         Calculo p1 = new Calculo(1, "1 + 1");
-        Gravacao p2 = new Gravacao(2);
+        Gravacao p2 = new Gravacao(2, "2 + 2");
         Leitura p3 = new Leitura(3);
         Impressao p4 = new Impressao(4);
+
         fila.adicionarProcesso(p1);
         fila.adicionarProcesso(p2);
         fila.adicionarProcesso(p3);
         fila.adicionarProcesso(p4);
+
         fila.exibirProcessosFila();
+
         fila.excluirProcesso();
+        fila.excluirProcesso(fila.buscarPosicaoProcessoViaPid(5));
+
         fila.exibirProcessosFila();
 
     }
@@ -54,16 +59,21 @@ public class Main {
             switch (opcaoEscolhidaMenuPrincipal) {
                 case 1:
                     menuPrincipalEmUso = false;
+
                     exibirMenuCriacaoProcesso();
                     break;
                 case 2:
-                    System.out.println("Escolha 2");
-
+                    fila.primeiroProcesso().executar();
+                    fila.excluirProcesso();
                     menuPrincipalEmUso = false;
                     break;
 
                 case 3:
-                    System.out.println("Escolha 3");
+                    System.out.println("Digite o PID do processo que deseja executar: ");
+                    int pid = entrada.nextInt();
+
+                    fila.buscarProcessoViaPid(pid).executar();
+                    fila.excluirProcesso(fila.buscarPosicaoProcessoViaPid(pid));
 
                     menuPrincipalEmUso = false;
                     break;
@@ -117,30 +127,38 @@ public class Main {
 
             switch (opcaoEscolhidaMenuCriacaoProcesso) {
                 case 1:
-                    System.out.println("Escolha 1");
+                    System.out.println("Digite a expressão que deseja gravar (Ex: 5 + 3): ");
+                    String expressaoGravacao = entrada.nextLine();
 
+                    Gravacao gravacao = new Gravacao(contadorPid, expressaoGravacao);
+
+                    fila.adicionarProcesso(gravacao);
+                    incrementoPid();
                     menuCriacaoProcessoEmUso = false;
                     break;
 
                 case 2:
-                    System.out.println("Escolha 2");
-
+                    Leitura leitura = new Leitura(contadorPid);
+                    fila.adicionarProcesso(leitura);
+                    incrementoPid();
                     menuCriacaoProcessoEmUso = false;
                     break;
 
                 case 3:
-                    System.out.println("Escolha 3");
-
+                    Impressao impressao = new Impressao(contadorPid);
+                    fila.adicionarProcesso(impressao);
+                    incrementoPid();
                     menuCriacaoProcessoEmUso = false;
                     break;
 
                 case 4:
-                    System.out.println("Escolha 4");
-                    System.out.println("Digite o calculo que desejas fazer (ex: 5 + 3): ");
-                    String expressao = entrada.nextLine();
+                    System.out.println("Digite o calculo que deseja criar (Ex: 5 + 3): ");
+                    String expressaoCalculo = entrada.nextLine();
 
-                    Calculo calculo = new Calculo(contadorPid, expressao);
+                    Calculo calculo = new Calculo(contadorPid, expressaoCalculo);
 
+                    fila.adicionarProcesso(calculo);
+                    incrementoPid();
                     menuCriacaoProcessoEmUso = false;
                     break;
 

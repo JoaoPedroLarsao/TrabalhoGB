@@ -31,12 +31,62 @@ public class Fila {
                 filaProcessos[i] = filaProcessos[inicio];
             }
             inicio = 0;
+            tamanho--;
             System.out.println("Processo excluido com sucesso.");
         }
     }
 
-    public boolean filaVazia() {
-        return tamanho == 0;
+    public void excluirProcesso(int posicaoProcesso) {
+            if (posicaoProcesso == 100) {
+                return;
+            }
+
+            filaProcessos[posicaoProcesso] = null;
+            inicio = posicaoProcesso;
+            for (int i = posicaoProcesso; i < tamanho; i++) {
+                inicio++;
+                filaProcessos[i] = filaProcessos[inicio];
+            }
+            inicio = 0;
+            tamanho--;
+            System.out.println("Processo excluido com sucesso.");
+    }
+
+    public int buscarPosicaoProcessoViaPid(int pid) {
+        int posicaoProcesso = -1;
+        for (int i = 0; i < tamanho; i++) {
+            if (filaProcessos[i].getPid() == pid) {
+                posicaoProcesso = i;
+                break;
+            }
+        }
+
+        if(posicaoProcesso == -1) {
+            System.out.println("Pid não encontrado. Insira um Pid válido.");
+            posicaoProcesso = 100;
+        }
+
+        return posicaoProcesso;
+    }
+
+    public Processo buscarProcessoViaPid(int pid) {
+        Processo processo = null;
+        for (int i = 0; i < tamanho; i++) {
+            if (filaProcessos[i].getPid() == pid) {
+                processo = filaProcessos[i];
+                break;
+            }
+        }
+
+        if(processo == null) {
+            System.out.println("Processo não encontrado. Insira um Pid válido.");
+        }
+
+        return processo;
+    }
+
+    public Processo primeiroProcesso() {
+        return filaProcessos[0];
     }
 
     public void exibirProcessosFila() {
@@ -50,5 +100,9 @@ public class Fila {
                 i++;
             }
         }
+    }
+
+    public boolean filaVazia() {
+        return tamanho == 0;
     }
 }

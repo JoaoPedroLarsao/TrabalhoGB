@@ -1,16 +1,17 @@
-import modelo.*;
+package modelo;
 
 import java.util.Scanner;
 
 public class Main {
-    private static Scanner entrada = new Scanner(System.in);
-    private static int contadorPid = 0;
-    static Fila fila = new Fila();
+    public static Scanner entrada = new Scanner(System.in);
+    public static int contadorPid = 0;
+    public static Fila fila = new Fila();
+
 
     public static void main(String[] args) {
-        //exibirMenuPrincipal();
+        exibirMenuPrincipal();
 
-        //Testes
+        /*Testes
         Calculo p1 = new Calculo(1, "1 + 1");
         Gravacao p2 = new Gravacao(2, "2 + 2");
         Leitura p3 = new Leitura(3);
@@ -27,7 +28,7 @@ public class Main {
         fila.excluirProcesso(fila.buscarPosicaoProcessoViaPid(5));
 
         fila.exibirProcessosFila();
-
+                                    */
     }
 
     private static void exibirMenuPrincipal() {

@@ -12,6 +12,6 @@ public class Impressao extends Processo {
     }
 
     public void executar() {
-
+        Main.fila.exibirProcessosFila();
     }
 }

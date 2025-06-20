@@ -89,6 +89,14 @@ public class Fila {
         return filaProcessos[0];
     }
 
+    public int getTamanho() {
+        return tamanho;
+    }
+
+    public Processo getProcesso(int posicao) {
+        return filaProcessos[posicao];
+    }
+
     public void exibirProcessosFila() {
         int i = 1;
         for (Processo processo : filaProcessos) {

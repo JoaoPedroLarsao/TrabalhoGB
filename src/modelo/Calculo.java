@@ -17,6 +17,10 @@ public class Calculo extends Processo {
         System.out.println("Executando a operação: " + expressao + " = " + calcular());
     }
 
+    public String getExpressao() {
+        return expressao;
+    }
+
     public double calcular() {
         String[] partes = expressao.trim().split(" ");
         double num1 = Double.parseDouble(partes[0]);

@@ -17,14 +17,15 @@ public class Leitura extends Processo {
     }
 
     public void executar() {
-        try (BufferedReader br = new BufferedReader(new FileReader("gravacao.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("fila/gravacao.txt"))) {
             String linha;
             while ((linha = br.readLine()) != null) {
                 Calculo c = new Calculo(Main.contadorPid, linha);
                 Main.fila.adicionarProcesso(c);
                 Main.incrementoPid();
+                br.close();
             }
-            new PrintWriter("gravacao.txt").close(); // limpa o arquivo
+            new PrintWriter("fila/gravacao.txt").close(); // limpa o arquivo
             System.out.println("Arquivo lido e processos adicionados à fila.");
         } catch (IOException e) {
             System.out.println("Erro na leitura do arquivo.");

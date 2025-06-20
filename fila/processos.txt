@@ -1,0 +1,3 @@
+Gravacao/1/5 + 3
+Leitura/2
+Impressao/3

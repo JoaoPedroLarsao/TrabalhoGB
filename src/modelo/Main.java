@@ -1,10 +1,11 @@
 package modelo;
 
+import java.io.*;
 import java.util.Scanner;
 
 public class Main {
     public static Scanner entrada = new Scanner(System.in);
-    public static int contadorPid = 0;
+    public static int contadorPid = 1;
     public static Fila fila = new Fila();
 
 
@@ -35,7 +36,7 @@ public class Main {
 
         boolean menuPrincipalEmUso = true;
 
-        while(menuPrincipalEmUso) {
+        while(true) {
 
             System.out.println("-------------------------------------");
             System.out.println("Menu principal");
@@ -59,36 +60,31 @@ public class Main {
 
             switch (opcaoEscolhidaMenuPrincipal) {
                 case 1:
-                    menuPrincipalEmUso = false;
-
                     exibirMenuCriacaoProcesso();
                     break;
                 case 2:
                     fila.primeiroProcesso().executar();
                     fila.excluirProcesso();
-                    menuPrincipalEmUso = false;
+
                     break;
 
                 case 3:
                     System.out.println("Digite o PID do processo que deseja executar: ");
                     int pid = entrada.nextInt();
+                    entrada.nextLine();
 
                     fila.buscarProcessoViaPid(pid).executar();
                     fila.excluirProcesso(fila.buscarPosicaoProcessoViaPid(pid));
 
-                    menuPrincipalEmUso = false;
                     break;
 
                 case 4:
-                    System.out.println("Escolha 4");
-
-                    menuPrincipalEmUso = false;
+                    salvarFila();
                     break;
 
                 case 5:
-                    System.out.println("Escolha 5");
+                   carregarFila();
 
-                    menuPrincipalEmUso = false;
                     break;
 
                 case 6:
@@ -135,6 +131,7 @@ public class Main {
 
                     fila.adicionarProcesso(gravacao);
                     incrementoPid();
+
                     menuCriacaoProcessoEmUso = false;
                     break;
 
@@ -169,6 +166,69 @@ public class Main {
             }
         }
     }
+
+    public static void carregarFila() {
+        try {
+            BufferedReader leitor = new BufferedReader(new FileReader("fila/processos.txt"));
+            String linha;
+            while((linha = leitor.readLine()) != null) {
+                String[] partes = linha.split("/");
+                String tipoProcesso = partes[0];
+                int pid = Integer.parseInt(partes[1]);
+
+                switch (tipoProcesso) {
+                    case "Calculo":
+                        String expressaoCalculo = partes[2];
+                        fila.adicionarProcesso(new Calculo(pid, expressaoCalculo));
+                        break;
+
+                    case "Gravacao":
+                        String expressaoGravacao = partes[2];
+                        fila.adicionarProcesso(new Gravacao(pid, expressaoGravacao));
+                        break;
+
+                    case "Impressao":
+                        fila.adicionarProcesso(new Impressao(pid));
+                        break;
+
+                    case "Leitura":
+                        fila.adicionarProcesso(new Leitura(pid));
+                        break;
+                }
+
+            }
+            System.out.println("Fila carregada com sucesso.");
+            leitor.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void salvarFila() {
+        try {
+            BufferedWriter escritor = new BufferedWriter(new FileWriter("fila/processos.txt"));
+            for (int i = 0; i < fila.getTamanho(); i++) {
+                Processo processo = fila.getProcesso(i);
+
+                if(processo instanceof Calculo) {
+                    escritor.write("Calculo/" + processo.getPid() + "/" + ((Calculo) processo).getExpressao() + "\n");
+                } else if(processo instanceof Gravacao) {
+                    escritor.write("Gravacao/" + processo.getPid() + "/" + ((Gravacao) processo).getExpressao()  + "\n");
+                } else if(processo instanceof Leitura) {
+                    escritor.write("Leitura/" + processo.getPid() + "\n");
+                } else if(processo instanceof Impressao) {
+                    escritor.write("Impressao/" + processo.getPid() + "\n");
+                }
+            }
+            escritor.close();
+            System.out.println("Fila salva com sucesso.");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static void incrementoPid() {
         contadorPid++;
     }
